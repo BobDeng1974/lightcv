@@ -908,3 +908,710 @@ TEST(Tuple, Erase) {
   EXPECT_EQ(t6[2].S(), "a");
   EXPECT_EQ(t6[3].I(), 4);
 }
+
+TEST(Tuple, EqualOperator) {
+  //        Index      | 0 | 1 | 2 | 3 |
+  Tuple t0(1, 4);   // |  1|  2|  3| 2 |
+  Tuple t1(1.1, 4); // |1.1|2.2|3.3|2.2|
+  Tuple t2("a", 4); // |"a"|"b"|"c"|"b"|
+  Tuple t3(2, 3);   // |  2|2.2|"b"|
+  Tuple t4(2, 3);   // |  2|2.2|"b"|
+  t0.Set(2, 1);
+  t0.Set(3, 2);
+  t0.Set(2, 3);
+  t1.Set(2.2, 1);
+  t1.Set(3.3, 2);
+  t1.Set(2.2, 3);
+  t2.Set("b", 1);
+  t2.Set("c", 2);
+  t2.Set("b", 3);
+  t3.Set(2.2, 1);
+  t3.Set("b", 2);
+  t4.Set(2.2, 1);
+  t4.Set("b", 2);
+
+  // 1. Integer
+  EXPECT_TRUE(t0[0] == 1);
+  EXPECT_TRUE(1 == t0[0]);
+  EXPECT_FALSE(t0[0] == 2);
+  EXPECT_FALSE(2 == t0[0]);
+
+  EXPECT_FALSE(t1[0] == 1);
+  EXPECT_FALSE(1 == t1[0]);
+
+  EXPECT_FALSE(t2[0] == 1);
+  EXPECT_FALSE(1 == t2[0]);
+
+  EXPECT_TRUE(t3[0] == 2);
+  EXPECT_TRUE(2 == t3[0]);
+  EXPECT_FALSE(t3[0] == 1);
+  EXPECT_FALSE(1 == t3[0]);
+  EXPECT_FALSE(t3[1] == 2);
+  EXPECT_FALSE(2 == t3[1]);
+  EXPECT_FALSE(t3[2] == 2);
+  EXPECT_FALSE(2 == t3[2]);
+
+
+  // 2. Real : only make sense when compare with String
+  EXPECT_FALSE(t0[0] == 1.1);
+  EXPECT_FALSE(1.1 == t0[0]);
+  EXPECT_FALSE(t1[1] == 1.1);
+  EXPECT_FALSE(1.1 == t1[1]);
+  EXPECT_FALSE(t2[0] == 1.1);
+  EXPECT_FALSE(1.1 == t2[0]);
+  EXPECT_FALSE(t3[0] == 1.1);
+  EXPECT_FALSE(1.1 == t3[0]);
+  EXPECT_FALSE(t3[1] == 1.1);
+  EXPECT_FALSE(1.1 == t3[1]);
+  EXPECT_FALSE(t3[2] == 1.1);
+  EXPECT_FALSE(1.1 == t3[2]);
+
+  // 3. String
+  EXPECT_FALSE(t0[0] == "b");
+  EXPECT_FALSE("b" == t0[0]);
+  EXPECT_FALSE(t1[0] == "b");
+  EXPECT_FALSE("b" == t1[0]);
+  EXPECT_TRUE(t2[1] == "b");
+  EXPECT_TRUE("b" == t2[1]);
+  EXPECT_FALSE(t2[1] == "a");
+  EXPECT_FALSE("a" == t2[1]);
+  EXPECT_FALSE(t3[0] == "b");
+  EXPECT_FALSE("b" == t3[0]);
+  EXPECT_FALSE(t3[1] == "b");
+  EXPECT_FALSE("b" == t3[1]);
+  EXPECT_TRUE(t3[2] == "b");
+  EXPECT_TRUE("b" == t3[2]);
+  EXPECT_FALSE(t3[2] == "a");
+  EXPECT_FALSE("a" == t3[2]);
+
+  // 4. VarRef
+  EXPECT_TRUE(t0[1] == t0[3]);
+  EXPECT_FALSE(t0[0] == t0[1]);
+  EXPECT_TRUE(t0[1] == t3[0]);
+  EXPECT_TRUE(t3[0] == t0[1]);
+  EXPECT_FALSE(t0[0] == t1[0]);
+  EXPECT_FALSE(t0[0] == t2[0]);
+  EXPECT_FALSE(t0[0] == t3[1]);
+  EXPECT_FALSE(t0[0] == t3[2]);
+
+  EXPECT_FALSE(t1[0] == t1[1]);
+  EXPECT_FALSE(t1[0] == t2[0]);
+  EXPECT_FALSE(t1[0] == t3[0]);
+  EXPECT_FALSE(t1[0] == t3[1]);
+  EXPECT_FALSE(t1[0] == t3[2]);
+
+  EXPECT_FALSE(t2[0] == t0[0]);
+  EXPECT_FALSE(t2[0] == t1[0]);
+  EXPECT_TRUE(t2[1] == t2[3]);
+  EXPECT_FALSE(t2[0] == t2[1]);
+  EXPECT_FALSE(t2[0] == t3[0]);
+  EXPECT_FALSE(t2[0] == t3[1]);
+  EXPECT_TRUE(t2[1] == t3[2]);
+  EXPECT_FALSE(t2[0] == t3[2]);
+}
+
+TEST(Tuple, NotEqualOperator) {
+  //        Index      | 0 | 1 | 2 | 3 |
+  Tuple t0(1, 4);   // |  1|  2|  3| 2 |
+  Tuple t1(1.1, 4); // |1.1|2.2|3.3|2.2|
+  Tuple t2("a", 4); // |"a"|"b"|"c"|"b"|
+  Tuple t3(2, 3);   // |  2|2.2|"b"|
+  Tuple t4(2, 3);   // |  2|2.2|"b"|
+  t0.Set(2, 1);
+  t0.Set(3, 2);
+  t0.Set(2, 3);
+  t1.Set(2.2, 1);
+  t1.Set(3.3, 2);
+  t1.Set(2.2, 3);
+  t2.Set("b", 1);
+  t2.Set("c", 2);
+  t2.Set("b", 3);
+  t3.Set(2.2, 1);
+  t3.Set("b", 2);
+  t4.Set(2.2, 1);
+  t4.Set("b", 2);
+
+  // 1. Integer
+  EXPECT_FALSE(t0[0] != 1);
+  EXPECT_FALSE(1 != t0[0]);
+  EXPECT_TRUE(t0[0] != 2);
+  EXPECT_TRUE(2 != t0[0]);
+
+  EXPECT_TRUE(t1[0] != 1);
+  EXPECT_TRUE(1 != t1[0]);
+
+  EXPECT_TRUE(t2[0] != 1);
+  EXPECT_TRUE(1 != t2[0]);
+
+  EXPECT_FALSE(t3[0] != 2);
+  EXPECT_FALSE(2 != t3[0]);
+  EXPECT_TRUE(t3[0] != 1);
+  EXPECT_TRUE(1 != t3[0]);
+  EXPECT_TRUE(t3[1] != 2);
+  EXPECT_TRUE(2 != t3[1]);
+  EXPECT_TRUE(t3[2] != 2);
+  EXPECT_TRUE(2 != t3[2]);
+
+
+  // 2. Real : only make sense when compare with String
+  EXPECT_TRUE(t0[0] != 1.1);
+  EXPECT_TRUE(1.1 != t0[0]);
+  EXPECT_TRUE(t1[1] != 1.1);
+  EXPECT_TRUE(1.1 != t1[1]);
+  EXPECT_TRUE(t2[0] != 1.1);
+  EXPECT_TRUE(1.1 != t2[0]);
+  EXPECT_TRUE(t3[0] != 1.1);
+  EXPECT_TRUE(1.1 != t3[0]);
+  EXPECT_TRUE(t3[1] != 1.1);
+  EXPECT_TRUE(1.1 != t3[1]);
+  EXPECT_TRUE(t3[2] != 1.1);
+  EXPECT_TRUE(1.1 != t3[2]);
+
+  // 3. String
+  EXPECT_TRUE(t0[0] != "b");
+  EXPECT_TRUE("b" != t0[0]);
+  EXPECT_TRUE(t1[0] != "b");
+  EXPECT_TRUE("b" != t1[0]);
+  EXPECT_FALSE(t2[1] != "b");
+  EXPECT_FALSE("b" != t2[1]);
+  EXPECT_TRUE(t2[1] != "a");
+  EXPECT_TRUE("a" != t2[1]);
+  EXPECT_TRUE(t3[0] != "b");
+  EXPECT_TRUE("b" != t3[0]);
+  EXPECT_TRUE(t3[1] != "b");
+  EXPECT_TRUE("b" != t3[1]);
+  EXPECT_FALSE(t3[2] != "b");
+  EXPECT_FALSE("b" != t3[2]);
+  EXPECT_TRUE(t3[2] != "a");
+  EXPECT_TRUE("a" != t3[2]);
+
+  // 4. VarRef
+  EXPECT_FALSE(t0[1] != t0[3]);
+  EXPECT_TRUE(t0[0] != t0[1]);
+  EXPECT_FALSE(t0[1] != t3[0]);
+  EXPECT_FALSE(t3[0] != t0[1]);
+  EXPECT_TRUE(t0[0] != t1[0]);
+  EXPECT_TRUE(t0[0] != t2[0]);
+  EXPECT_TRUE(t0[0] != t3[1]);
+  EXPECT_TRUE(t0[0] != t3[2]);
+
+  EXPECT_TRUE(t1[0] != t1[1]);
+  EXPECT_TRUE(t1[0] != t2[0]);
+  EXPECT_TRUE(t1[0] != t3[0]);
+  EXPECT_TRUE(t1[0] != t3[1]);
+  EXPECT_TRUE(t1[0] != t3[2]);
+
+  EXPECT_TRUE(t2[0] != t0[0]);
+  EXPECT_TRUE(t2[0] != t1[0]);
+  EXPECT_FALSE(t2[1] != t2[3]);
+  EXPECT_TRUE(t2[0] != t2[1]);
+  EXPECT_TRUE(t2[0] != t3[0]);
+  EXPECT_TRUE(t2[0] != t3[1]);
+  EXPECT_FALSE(t2[1] != t3[2]);
+  EXPECT_TRUE(t2[0] != t3[2]);
+}
+
+TEST(Tuple, LessThanOperator) {
+  //        Index      | 0 | 1 | 2 | 3 |
+  Tuple t0(1, 4);   // |  1|  2|  3| 2 |
+  Tuple t1(1.1, 4); // |1.1|2.2|3.3|2.2|
+  Tuple t2("a", 4); // |"a"|"b"|"c"|"b"|
+  Tuple t3(2, 3);   // |  2|2.2|"b"|
+  Tuple t4(2, 3);   // |  2|2.2|"b"|
+  t0.Set(2, 1);
+  t0.Set(3, 2);
+  t0.Set(2, 3);
+  t1.Set(2.2, 1);
+  t1.Set(3.3, 2);
+  t1.Set(2.2, 3);
+  t2.Set("b", 1);
+  t2.Set("c", 2);
+  t2.Set("b", 3);
+  t3.Set(2.2, 1);
+  t3.Set("b", 2);
+  t4.Set(2.2, 1);
+  t4.Set("b", 2);
+
+  // 1. Integer
+  EXPECT_TRUE(t0[0] < 2);
+  EXPECT_TRUE(1 < t0[1]);
+  EXPECT_FALSE(t0[0] < 1);
+  EXPECT_FALSE(2 < t0[1]);
+  EXPECT_TRUE(t1[0] < 2);
+  EXPECT_TRUE(1 < t1[0]);
+  EXPECT_FALSE(t1[0] < 1);
+  EXPECT_FALSE(2 < t1[0]);
+  EXPECT_FALSE(t2[0] < 1);
+  EXPECT_FALSE(1 < t2[0]);
+  EXPECT_TRUE(t3[0] < 3);
+  EXPECT_TRUE(1 < t3[0]);
+  EXPECT_FALSE(t3[0] < 1);
+  EXPECT_FALSE(3 < t3[0]);
+  EXPECT_TRUE(t3[1] < 3);
+  EXPECT_TRUE(2 < t3[1]);
+  EXPECT_FALSE(t3[1] < 2);
+  EXPECT_FALSE(3 < t3[1]);
+  EXPECT_FALSE(t3[2] < 1);
+  EXPECT_FALSE(1 < t3[2]);
+
+  // 2. Real
+  EXPECT_TRUE(t0[0] < 1.1);
+  EXPECT_TRUE(1.1 < t0[1]);
+  EXPECT_FALSE(t0[1] < 1.1);
+  EXPECT_FALSE(2.2 < t0[1]);
+  EXPECT_TRUE(t1[0] < 2.2);
+  EXPECT_TRUE(1.1 < t1[1]);
+  EXPECT_FALSE(t1[1] < 1.1);
+  EXPECT_FALSE(2.2 < t1[0]);
+  EXPECT_FALSE(t2[0] < 1.1);
+  EXPECT_FALSE(1.1 < t2[0]);
+  EXPECT_TRUE(t3[0] < 2.2);
+  EXPECT_TRUE(1.1 < t3[0]);
+  EXPECT_FALSE(t3[1] < 2.2);
+  EXPECT_FALSE(3.3 < t3[0]);
+  EXPECT_TRUE(t3[1] < 3.3);
+  EXPECT_TRUE(1.1 < t3[1]);
+  EXPECT_FALSE(t3[1] < 1.1);
+  EXPECT_FALSE(3.3 < t3[1]);
+  EXPECT_FALSE(t3[2] < 1.1);
+  EXPECT_FALSE(1.1 < t3[2]);
+
+  // 3. String
+  EXPECT_FALSE(t0[0] < "b");
+  EXPECT_FALSE("b" < t0[0]);
+  EXPECT_FALSE(t1[0] < "b");
+  EXPECT_FALSE("b" < t1[0]);
+  EXPECT_TRUE(t2[0] < "b");
+  EXPECT_TRUE("a" < t2[1]);
+  EXPECT_FALSE(t2[1] < "a");
+  EXPECT_FALSE("c" < t2[1]);
+  EXPECT_FALSE(t3[0] < "b");
+  EXPECT_FALSE("b" < t3[0]);
+  EXPECT_FALSE(t3[1] < "b");
+  EXPECT_FALSE("b" < t3[1]);
+  EXPECT_TRUE(t3[2] < "c");
+  EXPECT_TRUE("a" < t3[2]);
+  EXPECT_FALSE(t3[2] < "a");
+  EXPECT_FALSE("c" < t3[2]);
+
+  // 4. VarRef
+  EXPECT_TRUE(t0[1] < t0[2]);
+  EXPECT_FALSE(t0[1] < t0[0]);
+  EXPECT_FALSE(t0[1] < t0[1]);
+  EXPECT_TRUE(t0[1] < t1[1]);
+  EXPECT_FALSE(t0[1] < t1[0]);
+  EXPECT_FALSE(t0[1] < t2[0]);
+  EXPECT_TRUE(t0[0] < t3[0]);
+  EXPECT_FALSE(t0[2] < t3[0]);
+  EXPECT_TRUE(t0[1] < t3[1]);
+  EXPECT_FALSE(t0[2] < t3[1]);
+  EXPECT_FALSE(t0[1] < t3[2]);
+
+  EXPECT_TRUE(t1[1] < t0[2]);
+  EXPECT_FALSE(t1[1] < t0[1]);
+  EXPECT_FALSE(t1[1] < t1[1]);
+  EXPECT_TRUE(t1[1] < t1[2]);
+  EXPECT_FALSE(t1[1] < t1[0]);
+  EXPECT_FALSE(t1[1] < t2[0]);
+  EXPECT_TRUE(t1[0] < t3[0]);
+  EXPECT_FALSE(t1[1] < t3[0]);
+  EXPECT_TRUE(t1[0] < t3[1]);
+  EXPECT_FALSE(t1[2] < t3[1]);
+  EXPECT_FALSE(t1[1] < t3[2]);
+
+  EXPECT_FALSE(t2[0] < t0[0]);
+  EXPECT_FALSE(t2[0] < t1[0]);
+  EXPECT_TRUE(t2[0] < t2[1]);
+  EXPECT_FALSE(t2[1] < t2[0]);
+  EXPECT_FALSE(t2[0] < t3[0]);
+  EXPECT_FALSE(t2[0] < t3[1]);
+  EXPECT_TRUE(t2[0] < t3[2]);
+  EXPECT_FALSE(t2[2] < t3[2]);
+
+  EXPECT_TRUE(t3[0] < t0[2]);
+  EXPECT_FALSE(t3[0] < t0[0]);
+  EXPECT_TRUE(t3[0] < t1[1]);
+  EXPECT_FALSE(t3[0] < t1[0]);
+  EXPECT_FALSE(t3[0] < t2[0]);
+  EXPECT_FALSE(t3[0] < t3[0]);
+
+}
+
+TEST(Tuple, GreaterThanOrEqualOperator) {
+  //        Index      | 0 | 1 | 2 | 3 |
+  Tuple t0(1, 4);   // |  1|  2|  3| 2 |
+  Tuple t1(1.1, 4); // |1.1|2.2|3.3|2.2|
+  Tuple t2("a", 4); // |"a"|"b"|"c"|"b"|
+  Tuple t3(2, 3);   // |  2|2.2|"b"|
+  Tuple t4(2, 3);   // |  2|2.2|"b"|
+  t0.Set(2, 1);
+  t0.Set(3, 2);
+  t0.Set(2, 3);
+  t1.Set(2.2, 1);
+  t1.Set(3.3, 2);
+  t1.Set(2.2, 3);
+  t2.Set("b", 1);
+  t2.Set("c", 2);
+  t2.Set("b", 3);
+  t3.Set(2.2, 1);
+  t3.Set("b", 2);
+  t4.Set(2.2, 1);
+  t4.Set("b", 2);
+
+  // 1. Integer
+  EXPECT_FALSE(t0[0] >= 2);
+  EXPECT_FALSE(1 >= t0[1]);
+  EXPECT_TRUE(t0[0] >= 1);
+  EXPECT_TRUE(2 >= t0[1]);
+  EXPECT_FALSE(t1[0] >= 2);
+  EXPECT_FALSE(1 >= t1[0]);
+  EXPECT_TRUE(t1[0] >= 1);
+  EXPECT_TRUE(2 >= t1[0]);
+  EXPECT_TRUE(t2[0] >= 1);
+  EXPECT_TRUE(1 >= t2[0]);
+  EXPECT_FALSE(t3[0] >= 3);
+  EXPECT_FALSE(1 >= t3[0]);
+  EXPECT_TRUE(t3[0] >= 1);
+  EXPECT_TRUE(3 >= t3[0]);
+  EXPECT_FALSE(t3[1] >= 3);
+  EXPECT_FALSE(2 >= t3[1]);
+  EXPECT_TRUE(t3[1] >= 2);
+  EXPECT_TRUE(3 >= t3[1]);
+  EXPECT_TRUE(t3[2] >= 1);
+  EXPECT_TRUE(1 >= t3[2]);
+
+  // 2. Real
+  EXPECT_FALSE(t0[0] >= 1.1);
+  EXPECT_FALSE(1.1 >= t0[1]);
+  EXPECT_TRUE(t0[1] >= 1.1);
+  EXPECT_TRUE(2.2 >= t0[1]);
+  EXPECT_FALSE(t1[0] >= 2.2);
+  EXPECT_FALSE(1.1 >= t1[1]);
+  EXPECT_TRUE(t1[1] >= 1.1);
+  EXPECT_TRUE(2.2 >= t1[0]);
+  EXPECT_TRUE(t2[0] >= 1.1);
+  EXPECT_TRUE(1.1 >= t2[0]);
+  EXPECT_FALSE(t3[0] >= 2.2);
+  EXPECT_FALSE(1.1 >= t3[0]);
+  EXPECT_TRUE(t3[1] >= 2.2);
+  EXPECT_TRUE(3.3 >= t3[0]);
+  EXPECT_FALSE(t3[1] >= 3.3);
+  EXPECT_FALSE(1.1 >= t3[1]);
+  EXPECT_TRUE(t3[1] >= 1.1);
+  EXPECT_TRUE(3.3 >= t3[1]);
+  EXPECT_TRUE(t3[2] >= 1.1);
+  EXPECT_TRUE(1.1 >= t3[2]);
+
+  // 3. String
+  EXPECT_TRUE(t0[0] >= "b");
+  EXPECT_TRUE("b" >= t0[0]);
+  EXPECT_TRUE(t1[0] >= "b");
+  EXPECT_TRUE("b" >= t1[0]);
+  EXPECT_FALSE(t2[0] >= "b");
+  EXPECT_FALSE("a" >= t2[1]);
+  EXPECT_TRUE(t2[1] >= "a");
+  EXPECT_TRUE("c" >= t2[1]);
+  EXPECT_TRUE(t3[0] >= "b");
+  EXPECT_TRUE("b" >= t3[0]);
+  EXPECT_TRUE(t3[1] >= "b");
+  EXPECT_TRUE("b" >= t3[1]);
+  EXPECT_FALSE(t3[2] >= "c");
+  EXPECT_FALSE("a" >= t3[2]);
+  EXPECT_TRUE(t3[2] >= "a");
+  EXPECT_TRUE("c" >= t3[2]);
+
+  // 4. VarRef
+  EXPECT_FALSE(t0[1] >= t0[2]);
+  EXPECT_TRUE(t0[1] >= t0[0]);
+  EXPECT_TRUE(t0[1] >= t0[1]);
+  EXPECT_FALSE(t0[1] >= t1[1]);
+  EXPECT_TRUE(t0[1] >= t1[0]);
+  EXPECT_TRUE(t0[1] >= t2[0]);
+  EXPECT_FALSE(t0[0] >= t3[0]);
+  EXPECT_TRUE(t0[2] >= t3[0]);
+  EXPECT_FALSE(t0[1] >= t3[1]);
+  EXPECT_TRUE(t0[2] >= t3[1]);
+  EXPECT_TRUE(t0[1] >= t3[2]);
+
+  EXPECT_FALSE(t1[1] >= t0[2]);
+  EXPECT_TRUE(t1[1] >= t0[1]);
+  EXPECT_TRUE(t1[1] >= t1[1]);
+  EXPECT_FALSE(t1[1] >= t1[2]);
+  EXPECT_TRUE(t1[1] >= t1[0]);
+  EXPECT_TRUE(t1[1] >= t2[0]);
+  EXPECT_FALSE(t1[0] >= t3[0]);
+  EXPECT_TRUE(t1[1] >= t3[0]);
+  EXPECT_FALSE(t1[0] >= t3[1]);
+  EXPECT_TRUE(t1[2] >= t3[1]);
+  EXPECT_TRUE(t1[1] >= t3[2]);
+}
+
+TEST(Tuple, GreaterThanOperator) {
+  //        Index      | 0 | 1 | 2 | 3 |
+  Tuple t0(1, 4);   // |  1|  2|  3| 2 |
+  Tuple t1(1.1, 4); // |1.1|2.2|3.3|2.2|
+  Tuple t2("a", 4); // |"a"|"b"|"c"|"b"|
+  Tuple t3(2, 3);   // |  2|2.2|"b"|
+  Tuple t4(2, 3);   // |  2|2.2|"b"|
+  t0.Set(2, 1);
+  t0.Set(3, 2);
+  t0.Set(2, 3);
+  t1.Set(2.2, 1);
+  t1.Set(3.3, 2);
+  t1.Set(2.2, 3);
+  t2.Set("b", 1);
+  t2.Set("c", 2);
+  t2.Set("b", 3);
+  t3.Set(2.2, 1);
+  t3.Set("b", 2);
+  t4.Set(2.2, 1);
+  t4.Set("b", 2);
+
+  // 1. Integer
+  EXPECT_TRUE(t0[1] > 1);
+  EXPECT_TRUE(3 > t0[1]);
+  EXPECT_FALSE(t0[1] > 3);
+  EXPECT_FALSE(1 > t0[1]);
+  EXPECT_TRUE(t1[1] > 2);
+  EXPECT_TRUE(3 > t1[1]);
+  EXPECT_FALSE(t1[1] > 3);
+  EXPECT_FALSE(2 > t1[1]);
+  EXPECT_FALSE(t2[0] > 1);
+  EXPECT_FALSE(1 > t2[0]);
+  EXPECT_TRUE(t3[0] > 1);
+  EXPECT_TRUE(3 > t3[0]);
+  EXPECT_FALSE(t3[0] > 3);
+  EXPECT_FALSE(1 > t3[0]);
+  EXPECT_TRUE(t3[1] > 1);
+  EXPECT_TRUE(3 > t3[1]);
+  EXPECT_FALSE(t3[1] > 3);
+  EXPECT_FALSE(1 > t3[1]);
+  EXPECT_FALSE(t3[2] > 1);
+  EXPECT_FALSE(1 > t3[2]);
+
+  // 2. Real
+  EXPECT_TRUE(t0[1] > 1.1);
+  EXPECT_TRUE(3.3 > t0[1]);
+  EXPECT_FALSE(t0[0] > 1.1);
+  EXPECT_FALSE(2.2 > t0[2]);
+  EXPECT_TRUE(t1[2] > 2.2);
+  EXPECT_TRUE(3.3 > t1[1]);
+  EXPECT_FALSE(t1[1] > 3.3);
+  EXPECT_FALSE(2.2 > t1[2]);
+  EXPECT_FALSE(t2[0] > 1.1);
+  EXPECT_FALSE(1.1 > t2[0]);
+  EXPECT_TRUE(t3[0] > 1.1);
+  EXPECT_TRUE(3.3 > t3[0]);
+  EXPECT_FALSE(t3[1] > 3.3);
+  EXPECT_FALSE(1.1 > t3[0]);
+  EXPECT_TRUE(t3[1] > 1.1);
+  EXPECT_TRUE(3.3 > t3[1]);
+  EXPECT_FALSE(t3[1] > 3.3);
+  EXPECT_FALSE(1.1 > t3[1]);
+  EXPECT_FALSE(t3[2] > 1.1);
+  EXPECT_FALSE(1.1 > t3[2]);
+
+  // 3. String
+  EXPECT_FALSE(t0[0] > "b");
+  EXPECT_FALSE("b" > t0[0]);
+  EXPECT_FALSE(t1[0] > "b");
+  EXPECT_FALSE("b" > t1[0]);
+  EXPECT_TRUE(t2[1] > "a");
+  EXPECT_TRUE("b" > t2[0]);
+  EXPECT_FALSE(t2[0] > "b");
+  EXPECT_FALSE("a" > t2[1]);
+  EXPECT_FALSE(t3[0] > "b");
+  EXPECT_FALSE("b" > t3[0]);
+  EXPECT_FALSE(t3[1] > "b");
+  EXPECT_FALSE("b" > t3[1]);
+  EXPECT_TRUE(t3[2] > "a");
+  EXPECT_TRUE("c" > t3[2]);
+  EXPECT_FALSE(t3[2] > "c");
+  EXPECT_FALSE("a" > t3[2]);
+
+  // 4. VarRef
+  EXPECT_TRUE(t0[2] > t0[1]);
+  EXPECT_FALSE(t0[0] > t0[1]);
+  EXPECT_FALSE(t0[1] > t0[1]);
+  EXPECT_TRUE(t0[1] > t1[0]);
+  EXPECT_FALSE(t0[1] > t1[1]);
+  EXPECT_FALSE(t0[1] > t2[0]);
+  EXPECT_TRUE(t0[2] > t3[0]);
+  EXPECT_FALSE(t0[0] > t3[0]);
+  EXPECT_TRUE(t0[2] > t3[1]);
+  EXPECT_FALSE(t0[1] > t3[1]);
+  EXPECT_FALSE(t0[1] > t3[2]);
+
+  EXPECT_TRUE(t1[1] > t0[1]);
+  EXPECT_FALSE(t1[1] > t0[2]);
+  EXPECT_FALSE(t1[1] > t1[1]);
+  EXPECT_TRUE(t1[1] > t1[0]);
+  EXPECT_FALSE(t1[1] > t1[2]);
+  EXPECT_FALSE(t1[1] > t2[0]);
+  EXPECT_TRUE(t1[1] > t3[0]);
+  EXPECT_FALSE(t1[1] > t3[2]);
+  EXPECT_TRUE(t1[2] > t3[1]);
+  EXPECT_FALSE(t1[0] > t3[1]);
+  EXPECT_FALSE(t1[1] > t3[2]);
+
+  EXPECT_FALSE(t2[0] > t0[0]);
+  EXPECT_FALSE(t2[0] > t1[0]);
+  EXPECT_TRUE(t2[1] > t2[0]);
+  EXPECT_FALSE(t2[0] > t2[1]);
+
+  EXPECT_TRUE(t3[0] > t0[0]);
+  EXPECT_FALSE(t3[0] > t0[2]);
+  EXPECT_TRUE(t3[0] > t1[0]);
+  EXPECT_FALSE(t3[0] > t1[1]);
+  EXPECT_FALSE(t3[0] > t2[0]);
+  EXPECT_FALSE(t3[0] > t3[1]);
+  EXPECT_FALSE(t3[0] > t3[2]);
+  EXPECT_TRUE(t3[1] > t0[1]);
+  EXPECT_FALSE(t3[1] > t0[2]);
+  EXPECT_TRUE(t3[1] > t1[0]);
+  EXPECT_FALSE(t3[1] > t1[3]);
+  EXPECT_FALSE(t3[1] > t2[0]);
+  EXPECT_TRUE(t3[1] > t3[0]);
+  EXPECT_FALSE(t3[1] > t3[1]);
+  EXPECT_FALSE(t3[1] > t3[2]);
+  EXPECT_FALSE(t3[2] > t0[0]);
+  EXPECT_FALSE(t3[2] > t1[0]);
+  EXPECT_TRUE(t3[2] > t2[0]);
+  EXPECT_FALSE(t3[2] > t2[2]);
+  EXPECT_FALSE(t3[2] > t3[2]);
+}
+
+TEST(Tuple, LessThanOrEqualOperator) {
+  //        Index      | 0 | 1 | 2 | 3 |
+  Tuple t0(1, 4);   // |  1|  2|  3| 2 |
+  Tuple t1(1.1, 4); // |1.1|2.2|3.3|2.2|
+  Tuple t2("a", 4); // |"a"|"b"|"c"|"b"|
+  Tuple t3(2, 3);   // |  2|2.2|"b"|
+  Tuple t4(2, 3);   // |  2|2.2|"b"|
+  t0.Set(2, 1);
+  t0.Set(3, 2);
+  t0.Set(2, 3);
+  t1.Set(2.2, 1);
+  t1.Set(3.3, 2);
+  t1.Set(2.2, 3);
+  t2.Set("b", 1);
+  t2.Set("c", 2);
+  t2.Set("b", 3);
+  t3.Set(2.2, 1);
+  t3.Set("b", 2);
+  t4.Set(2.2, 1);
+  t4.Set("b", 2);
+
+  // 1. Integer
+  EXPECT_FALSE(t0[1] <= 1);
+  EXPECT_FALSE(3 <= t0[1]);
+  EXPECT_TRUE(t0[1] <= 3);
+  EXPECT_TRUE(1 <= t0[1]);
+  EXPECT_FALSE(t1[1] <= 2);
+  EXPECT_FALSE(3 <= t1[1]);
+  EXPECT_TRUE(t1[1] <= 3);
+  EXPECT_TRUE(2 <= t1[1]);
+  EXPECT_TRUE(t2[0] <= 1);
+  EXPECT_TRUE(1 <= t2[0]);
+  EXPECT_FALSE(t3[0] <= 1);
+  EXPECT_FALSE(3 <= t3[0]);
+  EXPECT_TRUE(t3[0] <= 3);
+  EXPECT_TRUE(1 <= t3[0]);
+  EXPECT_FALSE(t3[1] <= 1);
+  EXPECT_FALSE(3 <= t3[1]);
+  EXPECT_TRUE(t3[1] <= 3);
+  EXPECT_TRUE(1 <= t3[1]);
+  EXPECT_TRUE(t3[2] <= 1);
+  EXPECT_TRUE(1 <= t3[2]);
+
+  // 2. Real
+  EXPECT_FALSE(t0[1] <= 1.1);
+  EXPECT_FALSE(3.3 <= t0[1]);
+  EXPECT_TRUE(t0[0] <= 1.1);
+  EXPECT_TRUE(2.2 <= t0[2]);
+  EXPECT_FALSE(t1[2] <= 2.2);
+  EXPECT_FALSE(3.3 <= t1[1]);
+  EXPECT_TRUE(t1[1] <= 3.3);
+  EXPECT_TRUE(2.2 <= t1[2]);
+  EXPECT_TRUE(t2[0] <= 1.1);
+  EXPECT_TRUE(1.1 <= t2[0]);
+  EXPECT_FALSE(t3[0] <= 1.1);
+  EXPECT_FALSE(3.3 <= t3[0]);
+  EXPECT_TRUE(t3[1] <= 3.3);
+  EXPECT_TRUE(1.1 <= t3[0]);
+  EXPECT_FALSE(t3[1] <= 1.1);
+  EXPECT_FALSE(3.3 <= t3[1]);
+  EXPECT_TRUE(t3[1] <= 3.3);
+  EXPECT_TRUE(1.1 <= t3[1]);
+  EXPECT_TRUE(t3[2] <= 1.1);
+  EXPECT_TRUE(1.1 <= t3[2]);
+
+  // 3. String
+  EXPECT_TRUE(t0[0] <= "b");
+  EXPECT_TRUE("b" <= t0[0]);
+  EXPECT_TRUE(t1[0] <= "b");
+  EXPECT_TRUE("b" <= t1[0]);
+  EXPECT_FALSE(t2[1] <= "a");
+  EXPECT_FALSE("b" <= t2[0]);
+  EXPECT_TRUE(t2[0] <= "b");
+  EXPECT_TRUE("a" <= t2[1]);
+  EXPECT_TRUE(t3[0] <= "b");
+  EXPECT_TRUE("b" <= t3[0]);
+  EXPECT_TRUE(t3[1] <= "b");
+  EXPECT_TRUE("b" <= t3[1]);
+  EXPECT_FALSE(t3[2] <= "a");
+  EXPECT_FALSE("c" <= t3[2]);
+  EXPECT_TRUE(t3[2] <= "c");
+  EXPECT_TRUE("a" <= t3[2]);
+
+  // 4. VarRef
+  EXPECT_FALSE(t0[2] <= t0[1]);
+  EXPECT_TRUE(t0[0] <= t0[1]);
+  EXPECT_TRUE(t0[1] <= t0[1]);
+  EXPECT_FALSE(t0[1] <= t1[0]);
+  EXPECT_TRUE(t0[1] <= t1[1]);
+  EXPECT_TRUE(t0[1] <= t2[0]);
+  EXPECT_FALSE(t0[2] <= t3[0]);
+  EXPECT_TRUE(t0[0] <= t3[0]);
+  EXPECT_FALSE(t0[2] <= t3[1]);
+  EXPECT_TRUE(t0[1] <= t3[1]);
+  EXPECT_TRUE(t0[1] <= t3[2]);
+
+  EXPECT_FALSE(t1[1] <= t0[1]);
+  EXPECT_TRUE(t1[1] <= t0[2]);
+  EXPECT_TRUE(t1[1] <= t1[1]);
+  EXPECT_FALSE(t1[1] <= t1[0]);
+  EXPECT_TRUE(t1[1] <= t1[2]);
+  EXPECT_TRUE(t1[1] <= t2[0]);
+  EXPECT_FALSE(t1[1] <= t3[0]);
+  EXPECT_TRUE(t1[1] <= t3[2]);
+  EXPECT_FALSE(t1[2] <= t3[1]);
+  EXPECT_TRUE(t1[0] <= t3[1]);
+  EXPECT_TRUE(t1[1] <= t3[2]);
+
+  EXPECT_TRUE(t2[0] <= t0[0]);
+  EXPECT_TRUE(t2[0] <= t1[0]);
+  EXPECT_FALSE(t2[1] <= t2[0]);
+  EXPECT_TRUE(t2[0] <= t2[1]);
+
+  EXPECT_FALSE(t3[0] <= t0[0]);
+  EXPECT_TRUE(t3[0] <= t0[2]);
+  EXPECT_FALSE(t3[0] <= t1[0]);
+  EXPECT_TRUE(t3[0] <= t1[1]);
+  EXPECT_TRUE(t3[0] <= t2[0]);
+  EXPECT_TRUE(t3[0] <= t3[1]);
+  EXPECT_TRUE(t3[0] <= t3[2]);
+  EXPECT_FALSE(t3[1] <= t0[1]);
+  EXPECT_TRUE(t3[1] <= t0[2]);
+  EXPECT_FALSE(t3[1] <= t1[0]);
+  EXPECT_TRUE(t3[1] <= t1[3]);
+  EXPECT_TRUE(t3[1] <= t2[0]);
+  EXPECT_FALSE(t3[1] <= t3[0]);
+  EXPECT_TRUE(t3[1] <= t3[1]);
+  EXPECT_TRUE(t3[1] <= t3[2]);
+  EXPECT_TRUE(t3[2] <= t0[0]);
+  EXPECT_TRUE(t3[2] <= t1[0]);
+  EXPECT_FALSE(t3[2] <= t2[0]);
+  EXPECT_TRUE(t3[2] <= t2[2]);
+  EXPECT_TRUE(t3[2] <= t3[2]);
+}

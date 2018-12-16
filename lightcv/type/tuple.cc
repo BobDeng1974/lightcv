@@ -608,4 +608,243 @@ Var* Tuple::V() const {
 }
 
 
+bool operator==(const VarRef &lhs, Integer rhs) {
+  if (lhs.type == kVarInteger) {
+    return lhs.I() == rhs;
+  } else if (lhs.type == kVarReal) {
+    return lhs.D() == rhs;
+  }
+  return false;
+}
+
+bool operator==(Integer lhs, const VarRef &rhs) {
+  return operator==(rhs, lhs);
+}
+
+bool operator==(const VarRef &lhs, Real rhs) {
+  if (lhs.type == kVarReal) {
+    return lhs.D() == rhs;
+  } else if (lhs.type == kVarInteger) {
+    return lhs.I() == rhs;
+  }
+
+  return false;
+}
+
+bool operator==(Real lhs, const VarRef &rhs) {
+  return operator==(rhs, lhs);
+}
+
+bool operator==(const VarRef &lhs, const String &rhs) {
+  if (lhs.type == kVarString) {
+    return lhs.S() == rhs;
+  }
+
+  return false;
+}
+
+bool operator==(const String &lhs, const VarRef &rhs) {
+  return operator==(rhs, lhs);
+}
+
+bool operator==(const VarRef &lhs, const VarRef &rhs) {
+  if (rhs.type == kVarInteger) {
+    return operator==(lhs, rhs.I());
+  } else if (rhs.type == kVarReal) {
+    return operator==(lhs, rhs.D());
+  } else if (rhs.type == kVarString) {
+    return operator==(lhs, rhs.S());
+  }
+
+  return false;
+}
+
+bool operator!=(const VarRef &lhs, Integer rhs) {
+  return !operator==(lhs, rhs);
+}
+
+bool operator!=(Integer lhs, const VarRef &rhs) {
+  return !operator==(lhs, rhs);
+}
+
+bool operator!=(const VarRef &lhs, Real rhs) {
+  return !operator==(lhs, rhs);
+}
+
+bool operator!=(const Real lhs, const VarRef &rhs) {
+  return !operator==(lhs, rhs);
+}
+bool operator!=(const VarRef &lhs, const String &rhs) {
+  return !operator==(lhs, rhs);
+}
+
+bool operator!=(const String &lhs, const VarRef &rhs) {
+  return !operator==(lhs, rhs);
+}
+
+bool operator!=(const VarRef &lhs, const VarRef &rhs) {
+  return !operator==(lhs, rhs);
+}
+
+bool operator<(const VarRef &lhs, Integer rhs) {
+  if (lhs.type == kVarInteger) {
+    return lhs.I() < rhs;
+  } else if (lhs.type == kVarReal) {
+    return lhs.D() < rhs;
+  }
+
+  return false;
+}
+
+bool operator<(Integer lhs, const VarRef &rhs) {
+  return operator>(rhs, lhs);
+}
+
+bool operator<(const VarRef &lhs, Real rhs) {
+  if (lhs.type == kVarReal) {
+    return lhs.D() < rhs;
+  } else if (lhs.type == kVarInteger) {
+    return lhs.I() < rhs;
+  }
+
+  return false;
+}
+
+bool operator<(Real lhs, const VarRef &rhs) {
+  return operator>(rhs, lhs);
+}
+
+bool operator<(const VarRef &lhs, const String &rhs) {
+  if (lhs.type == kVarString) {
+    return lhs.S() < rhs;
+  }
+
+  return false;
+}
+
+bool operator<(const String &lhs, const VarRef &rhs) {
+  return operator>(rhs, lhs);
+}
+
+bool operator<(const VarRef &lhs, const VarRef &rhs) {
+  if (rhs.type == kVarInteger) {
+    return operator<(lhs, rhs.I());
+  } else if (rhs.type == kVarReal) {
+    return operator<(lhs, rhs.D());
+  } else if (rhs.type == kVarString) {
+    return operator<(lhs, rhs.S());
+  }
+
+  return false;
+}
+
+bool operator>=(const VarRef &lhs, Integer rhs) {
+  return !operator<(lhs, rhs);
+}
+
+bool operator>=(Integer lhs, const VarRef &rhs) {
+  return !operator<(lhs, rhs);
+}
+
+bool operator>=(const VarRef &lhs, Real rhs) {
+  return !operator<(lhs, rhs);
+}
+
+bool operator>=(Real lhs, const VarRef &rhs) {
+  return !operator<(lhs, rhs);
+}
+
+bool operator>=(const VarRef &lhs, const String &rhs) {
+  return !operator<(lhs, rhs);
+}
+
+bool operator>=(const String &lhs, const VarRef &rhs) {
+  return !operator<(lhs, rhs);
+}
+
+bool operator>=(const VarRef &lhs, const VarRef &rhs) {
+  return !operator<(lhs, rhs);
+}
+
+bool operator>(const VarRef &lhs, Integer rhs) {
+  if (lhs.type == kVarInteger) {
+    return lhs.I() > rhs;
+  } else if (lhs.type == kVarReal) {
+    return lhs.D() > rhs;
+  }
+
+  return false;
+}
+
+bool operator>(Integer lhs, const VarRef &rhs) {
+  return operator<(rhs, lhs);
+}
+
+bool operator>(const VarRef &lhs, Real rhs) {
+  if (lhs.type == kVarReal) {
+    return lhs.D() > rhs;
+  } else if (lhs.type == kVarInteger) {
+    return lhs.I() > rhs;
+  }
+
+  return false;
+}
+
+bool operator>(Real lhs, const VarRef &rhs) {
+  return operator<(rhs, lhs);
+}
+
+bool operator>(const VarRef &lhs, const String &rhs) {
+  if (lhs.type == kVarString) {
+    return lhs.S() > rhs;
+  }
+
+  return false;
+}
+
+bool operator>(const String &lhs, const VarRef &rhs) {
+  return operator<(rhs, lhs);
+}
+
+bool operator>(const VarRef &lhs, const VarRef &rhs) {
+  if (rhs.type == kVarInteger) {
+    return operator>(lhs, rhs.I());
+  } else if (rhs.type == kVarReal) {
+    return operator>(lhs, rhs.D());
+  } else if (rhs.type == kVarString) {
+    return operator>(lhs, rhs.S());
+  }
+
+  return false;
+}
+
+bool operator<=(const VarRef &lhs, Integer rhs) {
+  return !operator>(lhs, rhs);
+}
+
+bool operator<=(Integer lhs, const VarRef &rhs) {
+  return !operator>(lhs, rhs);
+}
+
+bool operator<=(const VarRef &lhs, Real rhs) {
+  return !operator>(lhs, rhs);
+}
+
+bool operator<=(Real lhs, const VarRef &rhs) {
+  return !operator>(lhs, rhs);
+}
+
+bool operator<=(const VarRef &lhs, const String &rhs) {
+  return !operator>(lhs, rhs);
+}
+
+bool operator<=(const String &lhs, const VarRef &rhs) {
+  return !operator>(lhs, rhs);
+}
+
+bool operator<=(const VarRef &lhs, const VarRef &rhs) {
+  return !operator>(lhs, rhs);
+}
+
 }  // namespace lightcv
+

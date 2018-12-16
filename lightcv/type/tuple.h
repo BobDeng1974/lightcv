@@ -79,6 +79,61 @@ class Tuple {
   Integer capacity_;
 };
 
+// Compasison operators
+// Equal to
+bool operator==(const VarRef &lhs, Integer rhs);
+bool operator==(Integer lhs, const VarRef &rhs);
+bool operator==(const VarRef &lhs, Real rhs);
+bool operator==(const Real lhs, const VarRef &rhs);
+bool operator==(const VarRef &lhs, const String &rhs);
+bool operator==(const String &lhs, const VarRef &rhs);
+bool operator==(const VarRef &lhs, const VarRef &rhs);
+
+// Not equal to
+bool operator!=(const VarRef &lhs, Integer rhs);
+bool operator!=(Integer lhs, const VarRef &rhs);
+bool operator!=(const VarRef &lhs, Real rhs);
+bool operator!=(const Real lhs, const VarRef &rhs);
+bool operator!=(const VarRef &lhs, const String &rhs);
+bool operator!=(const String &lhs, const VarRef &rhs);
+bool operator!=(const VarRef &lhs, const VarRef &rhs);
+
+// Less than
+bool operator<(const VarRef &lhs, Integer rhs);
+bool operator<(Integer lhs, const VarRef &rhs);
+bool operator<(const VarRef &lhs, Real rhs);
+bool operator<(Real lhs, const VarRef &rhs);
+bool operator<(const VarRef &lhs, const String &rhs);
+bool operator<(const String &lhs, const VarRef &rhs);
+bool operator<(const VarRef &lhs, const VarRef &rhs);
+
+// Greater than or equal
+bool operator>=(const VarRef &lhs, Integer rhs);
+bool operator>=(Integer lhs, const VarRef &rhs);
+bool operator>=(const VarRef &lhs, Real rhs);
+bool operator>=(Real lhs, const VarRef &rhs);
+bool operator>=(const VarRef &lhs, const String &rhs);
+bool operator>=(const String &lhs, const VarRef &rhs);
+bool operator>=(const VarRef &lhs, const VarRef &rhs);
+
+// Greater than
+bool operator>(const VarRef &lhs, Integer rhs);
+bool operator>(Integer lhs, const VarRef &rhs);
+bool operator>(const VarRef &lhs, Real rhs);
+bool operator>(Real lhs, const VarRef &rhs);
+bool operator>(const VarRef &lhs, const String &rhs);
+bool operator>(const String &lhs, const VarRef &rhs);
+bool operator>(const VarRef &lhs, const VarRef &rhs);
+
+// Less than or equal
+bool operator<=(const VarRef &lhs, Integer rhs);
+bool operator<=(Integer lhs, const VarRef &rhs);
+bool operator<=(const VarRef &lhs, Real rhs);
+bool operator<=(Real lhs, const VarRef &rhs);
+bool operator<=(const VarRef &lhs, const String &rhs);
+bool operator<=(const String &lhs, const VarRef &rhs);
+bool operator<=(const VarRef &lhs, const VarRef &rhs);
+
 }  // namespace lightcv
 
 #endif  // LIGHTCV_TYPE_TUPLE_H_
