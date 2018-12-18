@@ -20,6 +20,16 @@ limitations under the License.
 
 namespace lightcv {
 
+/*! \brief Container of values for parameter passing in operators.
+ *
+ *  A Tuple is similar to std::vector excpet that a Tuple can only contain 3 types of values in it (Integer, Real and 
+ *  String). Moreover, these three types of values can exist in one Tuple in the same time. 
+ *  The Tuple class is designed for parameter passing in operator, so its operating efficiency degrade
+ *  significantly when it contains mixing type values.
+ * 
+ *  class Var and struct VarRef are the auxiliary types used by Tuple to implement its features.
+ *  Do not use them directly in client side code.
+ */
 class Tuple {
  public:
   Tuple();
