@@ -4,6 +4,7 @@ project(lightcv)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 # compiler
+set(CMAKE_CXX_STANDARD 11)
 option(ENABLE_OPENMP "Use OpenMP" ON)
 if(ENABLE_OPENMP)
   include(enable_openmp)
@@ -12,9 +13,10 @@ endif(ENABLE_OPENMP)
 if(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
   set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+elseif(XCODE)
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
   set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "CMakeTargets")
-endif(MSVC)
+endif()
 
 # build
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")

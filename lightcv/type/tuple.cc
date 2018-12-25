@@ -414,6 +414,8 @@ void Tuple::SetVar(const Var &var, Integer index) {
   case kVarString:
     Set(*(var.val_.s), index);
     break;
+  default:
+    break;
   }
 }
 
@@ -431,6 +433,8 @@ void Tuple::GrowUpOne(VarType type) {
     case kVarString:
       vec_.s = new String[1];
       capacity_ = 1;
+      break;
+    default:
       break;
     }
     count_ = 0;
@@ -480,6 +484,8 @@ void Tuple::GrowUpOne(VarType type) {
         break;
       case kVarMixed:
         delete[] vec_.var;
+        break;
+      default:
         break;
       }
       vec_.var = bufVar;
@@ -533,6 +539,8 @@ void Tuple::Insert(const Var &v, Integer index) {
         }
       }
       break;
+    default:
+      break;
     }
     ++count_;
     SetVar(v, index);
@@ -560,6 +568,8 @@ void Tuple::Erase(Integer index) {
     case kVarMixed:
       delete[] vec_.var;
       break;
+    default:
+      break;
     }
     vec_.i = nullptr;
     type_ = kVarUndef;
@@ -581,6 +591,8 @@ void Tuple::Erase(Integer index) {
       for (Integer i = index; i < count_ - 1; ++i) {
         vec_.var[i] = vec_.var[i + 1];
       }
+      break;
+    default:
       break;
     }
   }

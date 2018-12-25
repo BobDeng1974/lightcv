@@ -30,15 +30,19 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 
-if(MSVC)
+if(MSVC OR XCODE)
   set_property(TARGET gtest PROPERTY FOLDER "utils")
   set_property(TARGET gtest_main PROPERTY FOLDER "utils")
-endif(MSVC)
+  set_property(TARGET gmock PROPERTY FOLDER "utils")
+  set_property(TARGET gmock_main PROPERTY FOLDER "utils")
+endif(MSVC OR XCODE)
 
 #---------------------------------------------------------------------------
 # benchmark
 # Download and unpack benchmark at configure time
 configure_file(cmake/benchmark.cmake.in benchmark-download/CMakeLists.txt)
+set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE BOOL "" FORCE)
+set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
   RESULT_VARIABLE result
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/benchmark-download )
@@ -52,16 +56,16 @@ if(result)
   message(FATAL_ERROR "Build step for benchmark failed: ${result}")
 endif()
 
-set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE BOOL "" FORCE)
 
 # Add benchmark directly to our build. This defines
 # the benchmark target.
 add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/benchmark-src
                  ${CMAKE_CURRENT_BINARY_DIR}/benchmark-build
                  EXCLUDE_FROM_ALL)
-if(MSVC)
+if(MSVC OR XCODE)
   set_property(TARGET benchmark PROPERTY FOLDER "utils")
-endif(MSVC)
+  set_property(TARGET benchmark_main PROPERTY FOLDER "utils")
+endif(MSVC OR XCODE)
 
 #---------------------------------------------------------------------------
 # Find halcon for test and benchmark

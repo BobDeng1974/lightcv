@@ -88,6 +88,8 @@ Var::Var(const VarRef &ref) {
   case kVarString:
     Set(*(ref.ptr.s));
     break;
+  default:
+    break;
   }
 }
 
