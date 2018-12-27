@@ -30,7 +30,7 @@ Image::~Image() {
 }
 
 Curve::Curve()
-  : type(kCurveNull) {
+  : curve_type(kCurveNull) {
 }
 
 Curve::~Curve() {

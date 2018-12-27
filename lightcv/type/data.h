@@ -27,9 +27,11 @@ namespace lightcv {
 class Data {
 public:
   virtual ~Data() {}
+  virtual Object::Type type() const { return Object::kObjNull; }
 };
 
 struct RegionHRun {
+  RegionHRun() : l(0), cb(0), ce(0) {}
   Integer l;  //!< line number (row) of run
   Integer cb; //!< column index of beginning of run
   Integer ce; //!< column index of ending of run
@@ -98,6 +100,8 @@ class Region : public Data {
   Region();
   ~Region();
 
+  Object::Type type() const override { return Object::kObjRegion; }
+
   std::vector<RegionHRun> runs;
   RegionFeatures features;
 };
@@ -108,14 +112,16 @@ class Image : public Data {
   Image();
   ~Image();
 
+  Object::Type type() const override { return Object::kObjImage; }
+
   cv::Mat pix;
-  Object::Ref domain;
+  Ref domain;
 };
 
 
 class Curve : public Data {
  public:
-  enum Type {
+  enum CurveType {
     kCurveNull,
     kCurvePointList,
     kCurveLines
@@ -136,11 +142,13 @@ class Curve : public Data {
   Curve();
   ~Curve();
 
+  Object::Type type() const override { return Object::kObjCurve; }
+
   std::vector<cv::Point2f> cps;  //!< control points
   LocalAttribute local_attrib;
   GlobalAttribute global_attrib;
 
-  Type type;
+  CurveType curve_type;
 };
 
 class ObjectTuple : public Data {
@@ -148,7 +156,9 @@ class ObjectTuple : public Data {
   ObjectTuple();
   ~ObjectTuple();
 
-  std::vector<Object::Ref> objs;
+  Object::Type type() const override { return Object::kObjTuple; }
+
+  std::vector<Ref> objs;
 };
 
 }  // namespace lightcv

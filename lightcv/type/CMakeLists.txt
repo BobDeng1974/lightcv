@@ -14,16 +14,22 @@ set(type_SRCS basic.h
 add_library(lightcv_type SHARED ${type_SRCS})
 target_link_libraries(lightcv_type ${OpenCV_LIBS})
 
-add_executable(tuple_test tuple_test.cc)
-target_link_libraries(tuple_test lightcv_type gtest_main)
+if(BUILD_TESTS)
+  add_executable(tuple_test tuple_test.cc)
+  target_link_libraries(tuple_test lightcv_type gtest_main)
+  add_test(tuple_test tuple_test)
 
-add_executable(tuple_perf tuple_perf.cc)
-target_link_libraries(tuple_perf lightcv_type benchmark)
+  add_executable(object_test object_test.cc)
+  target_link_libraries(object_test lightcv_type gtest_main)
+  add_test(object_test object_test)
+endif(BUILD_TESTS)
 
 if(MSVC OR XCODE)
   set_property(TARGET lightcv_type PROPERTY FOLDER "type") 
-  set_property(TARGET tuple_test PROPERTY FOLDER "type") 
-  set_property(TARGET tuple_perf PROPERTY FOLDER "type") 
+  if(BUILD_TESTS)
+    set_property(TARGET tuple_test PROPERTY FOLDER "type") 
+    set_property(TARGET object_test PROPERTY FOLDER "type") 
+  endif(BUILD_TESTS)
 endif(MSVC OR XCODE)
 
 if(WIN32)

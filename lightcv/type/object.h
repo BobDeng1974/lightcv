@@ -21,6 +21,9 @@ limitations under the License.
 namespace lightcv {
 
 class Data;
+class Object;
+
+typedef std::shared_ptr<Object> Ref;
 
 /*! \brief Object is used as arguments of operators.
  *   
@@ -42,7 +45,6 @@ class Object {
     kObjTuple
   };
 
-  typedef std::shared_ptr<Object> Ref;
 
   Object();
   ~Object();
@@ -50,17 +52,18 @@ class Object {
   Object(const Object &) = delete;
   Object& operator=(const Object &) = delete;
 
-  Type type() const { return type_; }
-  Data *data() const { return data_; }
+  Type type() const;
+
+  template<typename DataType>
+  DataType *data() const { return static_cast<DataType*>(data_); }
 
  private:
-  friend Ref CreateObject(Type, Data*);
+  friend Ref CreateObject(Data*);
 
-  Type type_;
   Data *data_;
 };
 
-Object::Ref CreateObject(Object::Type type, Data *data);
+Ref CreateObject(Data *data);
 
 }  // namespace lightcv
 

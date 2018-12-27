@@ -18,8 +18,7 @@ limitations under the License.
 namespace lightcv {
 
 Object::Object()
-  : data_(nullptr)
-  , type_(kObjNull) {
+  : data_(nullptr) {
 }
 
 Object::~Object() {
@@ -28,9 +27,16 @@ Object::~Object() {
   }
 }
 
-Object::Ref CreateObject(Object::Type type, Data *data) {
-  Object::Ref obj = std::make_shared<Object>();
-  obj->type_ = type;
+Object::Type Object::type() const {
+  if (data_) {
+    return data_->type();
+  }
+
+  return kObjNull;
+}
+
+Ref CreateObject(Data *data) {
+  Ref obj = std::make_shared<Object>();
   obj->data_ = data;
   return obj;
 }
