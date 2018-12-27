@@ -5,6 +5,10 @@ set(type_SRCS basic.h
               var.cc
               tuple.h
               tuple.cc
+              object.h
+              object.cc
+              data.h
+              data.cc
 )
 
 add_library(lightcv_type SHARED ${type_SRCS})
