@@ -9,6 +9,8 @@ set(type_SRCS basic.h
               object.cc
               data.h
               data.cc
+              operator.h
+              operator.cc
 )
 
 add_library(lightcv_type SHARED ${type_SRCS})
