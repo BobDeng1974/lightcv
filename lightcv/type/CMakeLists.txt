@@ -1,6 +1,6 @@
 # core types and infrastructures
 
-set(type_SRCS basic.h
+set(type_srcs basic.h
               var.h
               var.cc
               tuple.h
@@ -11,30 +11,31 @@ set(type_SRCS basic.h
               data.cc
               operator.h
               operator.cc
+              error.h
 )
 
-add_library(lightcv_type SHARED ${type_SRCS})
-target_link_libraries(lightcv_type ${OpenCV_LIBS})
+add_library(${libname_prefix}type SHARED ${type_srcs})
+target_link_libraries(${libname_prefix}type ${OpenCV_LIBS})
 
-if(BUILD_TESTS)
+if(build_tests)
   add_executable(tuple_test tuple_test.cc)
-  target_link_libraries(tuple_test lightcv_type gtest_main)
+  target_link_libraries(tuple_test ${libname_prefix}type gtest_main)
   add_test(tuple_test tuple_test)
 
   add_executable(object_test object_test.cc)
-  target_link_libraries(object_test lightcv_type gtest_main)
+  target_link_libraries(object_test ${libname_prefix}type gtest_main)
   add_test(object_test object_test)
-endif(BUILD_TESTS)
+endif(build_tests)
 
 if(MSVC OR XCODE)
-  set_property(TARGET lightcv_type PROPERTY FOLDER "type") 
-  if(BUILD_TESTS)
+  set_property(TARGET ${libname_prefix}type PROPERTY FOLDER "type") 
+  if(build_tests)
     set_property(TARGET tuple_test PROPERTY FOLDER "type") 
     set_property(TARGET object_test PROPERTY FOLDER "type") 
-  endif(BUILD_TESTS)
+  endif(build_tests)
 endif(MSVC OR XCODE)
 
 if(WIN32)
-  install(TARGETS lightcv_type RUNTIME DESTINATION bin)
+  install(TARGETS ${libname_prefix}type RUNTIME DESTINATION bin)
 endif()
 

@@ -1,7 +1,7 @@
-# if BUILD_TESTS then 
+# if build_tests then 
 #    1. download and build googletest and benchmark
 #    2. find Halcon
-#    3. enable_testing() if success, otherwise disable BUILD_TESTS
+#    3. enable_testing() if success, otherwise disable build_tests
 
 #---------------------------------------------------------------------------
 # googletest

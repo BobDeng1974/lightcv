@@ -12,38 +12,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#include "lightcv/type/operator.h"
+#include "lightcv/cc/read_image.h"
+#include "lightcv/operators/read_image.h"
 
 namespace lightcv {
 
-Operator::~Operator() {
-}
+Error ReadImage(Ref* image, const Tuple &file_name) {
+  ReadImageOperator op;
+  op.SetOuptObjs({ image });
+  op.SetInpTups({ file_name });
 
-size_t Operator::GetHashCode() const {
-  static size_t code = 0;
-  if (code == 0) {
-    std::hash<String> hash_fn;
-    code = hash_fn(GetName());
+  Error err = op.VerifyInputs();
+  if (err == Error::kMsgTrue) {
+    return op.Execute();
   }
 
-  return code;
-}
-
-void Operator::SetInpTups(std::initializer_list<std::reference_wrapper<const Tuple>> tups) {
-  in_tups_ = tups;
-}
-
-void Operator::SetInpObjs(std::initializer_list<Ref> objs) {
-  in_objs_ = objs;
-}
-
-void Operator::SetOutpTups(std::initializer_list<Tuple*> tups) {
-  out_tups_ = tups;
-}
-
-void Operator::SetOuptObjs(std::initializer_list<Ref*> objs) {
-  out_objs_ = objs;
+  return err;
 }
 
 }  // namespace lightcv
-

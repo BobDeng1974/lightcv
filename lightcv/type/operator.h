@@ -17,6 +17,7 @@ limitations under the License.
 
 #include "lightcv/type/tuple.h"
 #include "lightcv/type/object.h"
+#include "lightcv/type/error.h"
 
 #include <vector>
 #include <initializer_list>
@@ -30,37 +31,37 @@ class Operator {
 
   size_t GetHashCode() const;
 
-  int GetNumberOfTupInput() const {
+  int GetInpTupNumber() const {
     return static_cast<int>(in_tups_.size());
   }
 
-  int GetNumberOfObjInput() const {
+  int GetInpObjNumber() const {
     return static_cast<int>(in_objs_.size());
   }
 
-  int GetNumberOfTupOutput() const {
+  int GetOutpTupNumber() const {
     return static_cast<int>(out_tups_.size());
   }
 
-  int GetNumberOfObjOutput() const {
+  int GetOutpObjNumber() const {
     return static_cast<int>(out_objs_.size());
   }
 
-  void SetTupInputs(std::initializer_list<std::reference_wrapper<const Tuple>> tups);
-  void SetObjInputs(std::initializer_list<Ref> objs);
-  void SetTupOutputs(std::initializer_list<Tuple*> tups);
-  void SetObjOutputs(std::initializer_list<Ref> objs);
+  void SetInpTups(std::initializer_list<std::reference_wrapper<const Tuple>> tups);
+  void SetInpObjs(std::initializer_list<Ref> objs);
+  void SetOutpTups(std::initializer_list<Tuple*> tups);
+  void SetOuptObjs(std::initializer_list<Ref*> objs);
 
 
   virtual String GetDisplayName() const = 0;
   virtual String GetName() const = 0;
-  virtual bool VerifyInputs(String *err_msg) = 0;
-  virtual int Execute(String *err_msg) = 0;
+  virtual Error VerifyInputs() const = 0;
+  virtual Error Execute() = 0;
 
  protected:
   std::vector<Ref> in_objs_;
   std::vector<std::reference_wrapper<const Tuple>> in_tups_;
-  std::vector<Ref> out_objs_;
+  std::vector<Ref*> out_objs_;
   std::vector<Tuple*> out_tups_;
 };
 
