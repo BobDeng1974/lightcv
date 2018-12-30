@@ -63,13 +63,17 @@ struct RegionFeatureFlags {
   unsigned int rectangularity : 1;
 };
 
+enum RegionShape {
+  kRegionRectangle1 = 0
+};
+
 struct RegionFeatures {
   union {
     RegionFeatureFlags single;
     long all;
   } def;
 
-  uint8_t shape;
+  RegionShape shape;
 
   bool is_convex;
   bool is_filled;

@@ -33,6 +33,7 @@ if(build_tests)
       add_executable(${operator}_test ${operator}_test.cc)
       target_link_libraries(${operator}_test ${libname_prefix}type
                                              ${libname_prefix}operator
+                                             ${libname_prefix}cc
                                              ${OpenCV_LIBS}
                                              gtest_main
         )
@@ -46,6 +47,7 @@ if(build_tests)
       add_executable(${operator}_perf ${operator}_perf.cc)
       target_link_libraries(${operator}_perf ${libname_prefix}type
                                              ${libname_prefix}operator
+                                             ${libname_prefix}cc
                                              ${OpenCV_LIBS}
                                              benchmark
         )

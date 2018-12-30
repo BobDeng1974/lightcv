@@ -12,4 +12,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#include "gtest/gtest.h"
+#ifndef LIGHTCV_CC_GEN_RECTANGLE1_H_
+#define LIGHTCV_CC_GEN_RECTANGLE1_H_
+
+#include "lightcv/type/basic.h"
+#include "lightcv/type/error.h"
+#include "lightcv/type/tuple.h"
+#include "lightcv/type/object.h"
+
+namespace lightcv {
+
+Error GenRectangle1(Ref *rectangle, const Tuple &row1, const Tuple &col1,
+                                    const Tuple &row2, const Tuple &col2);
+
+}  // namespace lightcv
+
+#endif  // LIGHTCV_CC_GEN_RECTANGLE1_H_
+

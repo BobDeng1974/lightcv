@@ -12,19 +12,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#ifndef LIGHTCV_CC_READ_IMAGE_H_
-#define LIGHTCV_CC_READ_IMAGE_H_
-
-#include "lightcv/type/basic.h"
-#include "lightcv/type/error.h"
-#include "lightcv/type/tuple.h"
-#include "lightcv/type/object.h"
+#ifndef LIGHTCV_OPERATOR_GEN_RECTANGLE1_H_
+#define LIGHTCV_OPERATOR_GEN_RECTANGLE1_H_
+#include "lightcv/type/operator.h"
 
 namespace lightcv {
 
-Error ReadImage(Ref *image, const Tuple &file_name);
+class GenRectangle1Operator final : public Operator {
+ public:
+  GenRectangle1Operator();
+  ~GenRectangle1Operator();
+
+  String GetDisplayName() const override;
+  String GetName() const override;
+  Error VerifyInputs() const  override;
+  Error Execute() override;
+};
 
 }  // namespace lightcv
 
-#endif  // LIGHTCV_CC_READ_IMAGE_H_
+#endif // LIGHTCV_OPERATOR_GEN_RECTANGLE1_H_
 
