@@ -12,24 +12,33 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#ifndef LIGHTCV_OPERATOR_GEN_RECTANGLE1_H_
-#define LIGHTCV_OPERATOR_GEN_RECTANGLE1_H_
-#include "lightcv/core/operator.h"
+#include "lightcv/core/object.h"
+#include "lightcv/core/data.h"
 
 namespace lightcv {
 
-class GenRectangle1Operator final : public Operator {
- public:
-  GenRectangle1Operator();
-  ~GenRectangle1Operator();
+Object::Object()
+  : data_(nullptr) {
+}
 
-  String GetDisplayName() const override;
-  String GetName() const override;
-  Error VerifyInputs() const  override;
-  Error Execute() override;
-};
+Object::~Object() {
+  if (type() != kObjNull && data_) {
+    delete data_;
+  }
+}
+
+Object::Type Object::type() const {
+  if (data_) {
+    return data_->type();
+  }
+
+  return kObjNull;
+}
+
+Ref CreateObject(Data *data) {
+  Ref obj = std::make_shared<Object>();
+  obj->data_ = data;
+  return obj;
+}
 
 }  // namespace lightcv
-
-#endif // LIGHTCV_OPERATOR_GEN_RECTANGLE1_H_
-

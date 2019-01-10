@@ -12,12 +12,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#ifndef LIGHTCV_TYPE_OPERATOR_H_
-#define LIGHTCV_TYPE_OPERATOR_H_
+#ifndef LIGHTCV_CORE_OPERATOR_H_
+#define LIGHTCV_CORE_OPERATOR_H_
 
-#include "lightcv/type/tuple.h"
-#include "lightcv/type/object.h"
-#include "lightcv/type/error.h"
+#include "lightcv/core/tuple.h"
+#include "lightcv/core/object.h"
+#include "lightcv/core/error.h"
 
 #include <vector>
 #include <initializer_list>
@@ -67,5 +67,5 @@ class Operator {
 
 }  // namespace lightcv
 
-#endif // !LIGHTCV_TYPE_OPERATOR_H_
+#endif // !LIGHTCV_CORE_OPERATOR_H_
 

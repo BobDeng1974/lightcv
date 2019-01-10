@@ -13,7 +13,7 @@ if(hdrs)
 
   add_library(${libname_prefix}cc ${srcs} ${hdrs})
   target_link_libraries(${libname_prefix}cc ${libname_prefix}operator
-                                             ${libname_prefix}type
+                                             ${libname_prefix}core
     )
 endif(hdrs)
 

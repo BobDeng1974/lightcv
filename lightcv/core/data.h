@@ -12,11 +12,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#ifndef LIGHTCV_TYPE_DATA_H_
-#define LIGHTCV_TYPE_DATA_H_
+#ifndef LIGHTCV_CORE_DATA_H_
+#define LIGHTCV_CORE_DATA_H_
 
-#include "lightcv/type/basic.h"
-#include "lightcv/type/object.h"
+#include "lightcv/core/basic.h"
+#include "lightcv/core/object.h"
 
 #include <vector>
 #include <map>
@@ -167,5 +167,5 @@ class ObjectTuple : public Data {
 
 }  // namespace lightcv
 
-#endif  // LIGHTCV_TYPE_DATA_H_
+#endif  // LIGHTCV_CORE_DATA_H_
 

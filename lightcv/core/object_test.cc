@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 #include "gtest/gtest.h"
-#include "lightcv/type/data.h"
-#include "lightcv/type/object.h"
+#include "lightcv/core/data.h"
+#include "lightcv/core/object.h"
 #include <opencv2/opencv.hpp>
 
 using namespace lightcv;

@@ -15,10 +15,10 @@ limitations under the License.
 #ifndef LIGHTCV_CC_GEN_RECTANGLE1_H_
 #define LIGHTCV_CC_GEN_RECTANGLE1_H_
 
-#include "lightcv/type/basic.h"
-#include "lightcv/type/error.h"
-#include "lightcv/type/tuple.h"
-#include "lightcv/type/object.h"
+#include "lightcv/core/basic.h"
+#include "lightcv/core/error.h"
+#include "lightcv/core/tuple.h"
+#include "lightcv/core/object.h"
 
 namespace lightcv {
 

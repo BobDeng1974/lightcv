@@ -12,24 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#ifndef LIGHTCV_OPERATOR_GEN_RECTANGLE1_H_
-#define LIGHTCV_OPERATOR_GEN_RECTANGLE1_H_
-#include "lightcv/core/operator.h"
+#ifndef LIGHTCV_CORE_C_API_H_
+#define LIGHTCV_CORE_C_API_H_
 
-namespace lightcv {
-
-class GenRectangle1Operator final : public Operator {
- public:
-  GenRectangle1Operator();
-  ~GenRectangle1Operator();
-
-  String GetDisplayName() const override;
-  String GetName() const override;
-  Error VerifyInputs() const  override;
-  Error Execute() override;
-};
-
-}  // namespace lightcv
-
-#endif // LIGHTCV_OPERATOR_GEN_RECTANGLE1_H_
+#endif // !LIGHTCV_CORE_C_API_H_
 

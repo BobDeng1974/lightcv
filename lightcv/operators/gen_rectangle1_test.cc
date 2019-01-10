@@ -15,7 +15,7 @@ limitations under the License.
 #include "gtest/gtest.h"
 #include <opencv2/opencv.hpp>
 #include "lightcv/cc/gen_rectangle1.h"
-#include "lightcv/type/data.h"
+#include "lightcv/core/data.h"
 
 using namespace lightcv;
 

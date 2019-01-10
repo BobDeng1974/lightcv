@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#ifndef LIGHTCV_TYPE_BASIC_H_
-#define LIGHTCV_TYPE_BASIC_H_
+#ifndef LIGHTCV_CORE_BASIC_H_
+#define LIGHTCV_CORE_BASIC_H_
 
 #include <cstdint>
 #include <string>
@@ -26,5 +26,5 @@ typedef std::string String;
 
 } // namespace lightcv
 
-#endif  // LIGHTCV_TYPE_BASIC_H_
+#endif  // LIGHTCV_CORE_BASIC_H_
 

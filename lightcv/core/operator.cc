@@ -12,33 +12,38 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#include "lightcv/type/object.h"
-#include "lightcv/type/data.h"
+#include "lightcv/core/operator.h"
 
 namespace lightcv {
 
-Object::Object()
-  : data_(nullptr) {
+Operator::~Operator() {
 }
 
-Object::~Object() {
-  if (type() != kObjNull && data_) {
-    delete data_;
-  }
-}
-
-Object::Type Object::type() const {
-  if (data_) {
-    return data_->type();
+size_t Operator::GetHashCode() const {
+  static size_t code = 0;
+  if (code == 0) {
+    std::hash<String> hash_fn;
+    code = hash_fn(GetName());
   }
 
-  return kObjNull;
+  return code;
 }
 
-Ref CreateObject(Data *data) {
-  Ref obj = std::make_shared<Object>();
-  obj->data_ = data;
-  return obj;
+void Operator::SetInpTups(std::initializer_list<std::reference_wrapper<const Tuple>> tups) {
+  in_tups_ = tups;
+}
+
+void Operator::SetInpObjs(std::initializer_list<Ref> objs) {
+  in_objs_ = objs;
+}
+
+void Operator::SetOutpTups(std::initializer_list<Tuple*> tups) {
+  out_tups_ = tups;
+}
+
+void Operator::SetOuptObjs(std::initializer_list<Ref*> objs) {
+  out_objs_ = objs;
 }
 
 }  // namespace lightcv
+

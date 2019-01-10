@@ -12,11 +12,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#ifndef LIGHTCV_TYPE_TUPLE_H_
-#define LIGHTCV_TYPE_TUPLE_H_
+#ifndef LIGHTCV_CORE_TUPLE_H_
+#define LIGHTCV_CORE_TUPLE_H_
 
-#include "lightcv/type/basic.h"
-#include "lightcv/type/var.h"
+#include "lightcv/core/basic.h"
+#include "lightcv/core/var.h"
 
 namespace lightcv {
 
@@ -146,5 +146,5 @@ bool operator<=(const VarRef &lhs, const VarRef &rhs);
 
 }  // namespace lightcv
 
-#endif  // LIGHTCV_TYPE_TUPLE_H_
+#endif  // LIGHTCV_CORE_TUPLE_H_
 

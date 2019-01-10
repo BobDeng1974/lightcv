@@ -12,9 +12,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#ifndef LIGHTCV_TYPE_VAR_H_
-#define LIGHTCV_TYPE_VAR_H_
-#include "lightcv/type/basic.h"
+#ifndef LIGHTCV_CORE_VAR_H_
+#define LIGHTCV_CORE_VAR_H_
+#include "lightcv/core/basic.h"
 
 namespace lightcv {
 
@@ -31,10 +31,10 @@ class Tuple;
 
 struct VarRef {
   VarRef() {
-    ptr.i = NULL;
+    ptr.i = nullptr;
     type = kVarUndef;
     index = -1;
-    tuple = NULL;
+    tuple = nullptr;
   }
 
   union {
@@ -106,5 +106,5 @@ class Var {
 
 } // namespace lightcv
 
-#endif  // LIGHTCV_TYPE_VAR_H_
+#endif  // LIGHTCV_CORE_VAR_H_
 

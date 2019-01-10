@@ -6,7 +6,7 @@ if(MSVC)
   set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 endif()
 
-add_subdirectory(type)
+add_subdirectory(core)
 add_subdirectory(lib)
 add_subdirectory(operators)
 add_subdirectory(c)

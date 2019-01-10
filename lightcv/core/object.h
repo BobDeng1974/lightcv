@@ -12,10 +12,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#ifndef LIGHTCV_TYPE_OBJECT_H_
-#define LIGHTCV_TYPE_OBJECT_H_
+#ifndef LIGHTCV_CORE_OBJECT_H_
+#define LIGHTCV_CORE_OBJECT_H_
 
-#include "lightcv/type/basic.h"
+#include "lightcv/core/basic.h"
 #include <memory>
 
 namespace lightcv {
@@ -67,5 +67,5 @@ Ref CreateObject(Data *data);
 
 }  // namespace lightcv
 
-#endif  // LIGHTCV_TYPE_OBJECT_H_
+#endif  // LIGHTCV_CORE_OBJECT_H_
 

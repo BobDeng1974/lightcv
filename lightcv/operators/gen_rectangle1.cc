@@ -17,7 +17,7 @@ limitations under the License.
 #include <cmath>
 #include <opencv2/opencv.hpp>
 
-#include "lightcv/type/data.h"
+#include "lightcv/core/data.h"
 
 namespace lightcv {
 
