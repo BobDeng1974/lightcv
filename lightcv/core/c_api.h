@@ -15,5 +15,55 @@ limitations under the License.
 #ifndef LIGHTCV_CORE_C_API_H_
 #define LIGHTCV_CORE_C_API_H_
 
-#endif // !LIGHTCV_CORE_C_API_H_
+// Call C++ objects from C, see https://isocpp.org/wiki/faq/mixing-c-and-cpp#get-cpp-data-members-from-c
+#ifdef __cplusplus
+extern "C" {
+#endif  // __cplusplus
+
+typedef struct Tuple Tuple;
+typedef struct Ref Ref;
+typedef int Integer;
+typedef double Real;
+
+typedef enum VarType {
+  kVarUndef = 0,
+  kVarInteger,
+  kVarReal,
+  kVarString,
+  kVarMixed
+} VarType;
+
+
+// C Interface
+extern void DeleteTuple(Tuple **tup);
+extern Tuple* CreateTupleInteger(Integer i, Integer cnt);
+extern Tuple* CreateTupleReal(Real r, Integer cnt);
+extern Tuple* CreateTupleString(const char* s, Integer cnt);
+extern VarType TupleType(Tuple* tup);
+extern Integer TupleCount(Tuple* tup);
+extern Integer TupleCapacity(Tuple *tup);
+extern VarType TupleItemType(Tuple *tup, Integer index);
+extern Integer TupleGetIntegerItem(Tuple *tup, Integer index);
+extern Real TupleGetRealItem(Tuple *tup, Integer index);
+extern const char* TupleGetStringItem(Tuple *tup, Integer index);
+extern void TupleSetIntegerItem(Tuple *tup, Integer i, Integer index);
+extern void TupleSetRealItem(Tuple *tup, Real r, Integer index);
+extern void TupleSetStringItem(Tuple *tup, const char* s, Integer index);
+extern void TupleAppendInteger(Tuple *tup, Integer i);
+extern void TupleAppendReal(Tuple *tup, Real r);
+extern void TupleAppendString(Tuple *tup, const char *s);
+extern void TupleInsertInteger(Tuple *tup, Integer i, Integer index);
+extern void TupleInsertReal(Tuple *tup, Real r, Integer index);
+extern void TupleInsertString(Tuple *tup, const char *s, Integer index);
+extern void TupleEraseItem(Tuple *tup, Integer index);
+extern Integer* TupleIntegerItems(Tuple *tup);
+extern Real* TupleRealItems(Tuple *tup);
+
+
+#ifdef __cplusplus
+}
+#endif  // __cplusplus
+
+// types
+#endif  // LIGHTCV_CORE_C_API_H_
 
