@@ -21,7 +21,7 @@ limitations under the License.
 extern "C" {
 #endif  // __cplusplus
 
-extern Integer gen_rectangle1(Ref *rectangle, Tuple *row1, Tuple *col1, Tuple *row2, Tuple *col2);
+extern Integer gen_rectangle1(Obj *rectangle, Tup row1, Tup col1, Tup row2, Tup col2);
 
 #ifdef __cplusplus
 }

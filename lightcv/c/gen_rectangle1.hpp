@@ -26,7 +26,7 @@ using namespace lightcv;
 extern "C" {
 #endif  // __cplusplus
 
-Integer gen_rectangle1_cpp(Ref *rectangle, Tuple *row1, Tuple *col1, Tuple *row2, Tuple *col2);
+Integer gen_rectangle1_cpp(Ref **rectangle, Tuple *row1, Tuple *col1, Tuple *row2, Tuple *col2);
 
 #ifdef __cplusplus
 }

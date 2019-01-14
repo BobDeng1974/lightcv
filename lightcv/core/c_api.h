@@ -23,6 +23,9 @@ extern "C" {
 
 typedef struct Tuple Tuple;
 typedef struct Ref Ref;
+typedef struct Tuple* Tup;
+typedef struct Ref* Obj;
+
 typedef int Integer;
 typedef double Real;
 

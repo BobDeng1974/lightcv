@@ -15,7 +15,8 @@ limitations under the License.
 #include "lightcv/c/gen_rectangle1.h"
 #include "lightcv/c/gen_rectangle1.hpp"
 
-Integer gen_rectangle1(Ref *rectangle, Tuple *row1, Tuple *col1, Tuple *row2, Tuple *col2) {
-  return gen_rectangle1_cpp(rectangle, row1, col1, row2, col2);
+Integer gen_rectangle1(Obj *rectangle, Tup row1, Tup col1, Tup row2, Tup col2) {
+  Integer e = gen_rectangle1_cpp(rectangle, row1, col1, row2, col2);
+  return e;
 }
 

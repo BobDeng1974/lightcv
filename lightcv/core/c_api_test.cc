@@ -19,6 +19,8 @@ extern "C" {
 #include "lightcv/c/gen_rectangle1.h"
 }
 
+#include "lightcv/core/error.h"
+
 TEST(Tuple, Create) {
   Tuple *tup = CreateTupleInteger(10, 2);
   EXPECT_EQ(TupleType(tup), static_cast<int>(kVarInteger));
@@ -107,4 +109,20 @@ TEST(Tuple, Edit) {
 }
 
 TEST(Object, GenRectangle1) {
+  Obj rectangle1;
+  Tup row1, col1, row2, col2;
+  row1 = CreateTupleInteger(0, 1);
+  col1 = CreateTupleInteger(0, 1);
+  row2= CreateTupleInteger(100, 1);
+  col2 = CreateTupleInteger(200, 1);
+
+  Integer rc = gen_rectangle1(&rectangle1, row1, col1, row2, col2);
+  EXPECT_EQ(rc, static_cast<Integer>(rc));
+
+  ReleaseObject(&rectangle1);
+  DeleteTuple(&row1);
+  DeleteTuple(&col1);
+  DeleteTuple(&row2);
+  DeleteTuple(&col2);
 }
+

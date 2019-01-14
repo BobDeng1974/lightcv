@@ -15,7 +15,10 @@ limitations under the License.
 #include "lightcv/c/gen_rectangle1.hpp"
 #include "lightcv/cc/gen_rectangle1.h"
 
-Integer gen_rectangle1_cpp(Ref *rectangle, Tuple *row1, Tuple *col1, Tuple *row2, Tuple *col2) {
-  Error e = lightcv::GenRectangle1(rectangle, *row1, *col1, *row2, *col2);
+Integer gen_rectangle1_cpp(Ref **rectangle, Tuple *row1, Tuple *col1, Tuple *row2, Tuple *col2) {
+  Ref out1;
+  Error e = lightcv::GenRectangle1(&out1, *row1, *col1, *row2, *col2);
+  *rectangle = new Ref(out1);
   return static_cast<Integer>(e);
 }
+
