@@ -31,7 +31,7 @@ if(build_tests)
   add_test(object_test object_test)
 
   add_executable(c_api_test c_api_test.cc)
-  target_link_libraries(c_api_test ${libname_prefix}core gtest_main)
+  target_link_libraries(c_api_test ${libname_prefix}core ${libname_prefix}c gtest_main)
 endif(build_tests)
 
 if(MSVC OR XCODE)

@@ -122,3 +122,23 @@ Real* TupleRealItemsCpp(Tuple *tup) {
   return tup->D();
 }
 
+int ObjectGetTypeCpp(Ref *obj) {
+  if (obj) {
+    return static_cast<int>((*obj)->type());
+  }
+
+  return 0;
+}
+
+Ref* RetainObjectCpp(Ref *obj) {
+  Ref *ref = new Ref(*obj);
+  return ref;
+}
+
+void ReleaseObjectCpp(Ref **obj) {
+  if (*obj) {
+    delete (*obj);
+    *obj = nullptr;
+  }
+}
+

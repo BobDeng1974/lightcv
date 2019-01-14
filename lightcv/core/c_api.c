@@ -109,3 +109,15 @@ Integer* TupleIntegerItems(Tuple *tup) {
 Real* TupleRealItems(Tuple *tup) {
   return (Real*)TupleRealItemsCpp(tup);
 }
+
+ObjectType ObjectGetType(Ref *obj) {
+  return (ObjectType)ObjectGetTypeCpp(obj);
+}
+
+Ref* RetainObject(Ref *obj) {
+  return (Ref*)RetainObjectCpp(obj);
+}
+
+void ReleaseObject(Ref **obj) {
+  ReleaseObjectCpp(obj);
+}

@@ -16,6 +16,7 @@ limitations under the License.
 
 extern "C" {
 #include "lightcv/core/c_api.h"
+#include "lightcv/c/gen_rectangle1.h"
 }
 
 TEST(Tuple, Create) {
@@ -105,3 +106,5 @@ TEST(Tuple, Edit) {
   DeleteTuple(&tup);
 }
 
+TEST(Object, GenRectangle1) {
+}

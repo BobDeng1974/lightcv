@@ -50,6 +50,10 @@ extern void TupleEraseItemCpp(Tuple *tup, Integer index);
 extern Integer* TupleIntegerItemsCpp(Tuple *tup);
 extern Real* TupleRealItemsCpp(Tuple *tup);
 
+extern int ObjectGetTypeCpp(Ref *obj);
+extern Ref* RetainObjectCpp(Ref *obj);
+extern void ReleaseObjectCpp(Ref **obj);
+
 #ifdef __cplusplus
 }
 #endif  // __cplusplus

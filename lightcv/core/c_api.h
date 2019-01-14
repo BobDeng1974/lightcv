@@ -16,6 +16,7 @@ limitations under the License.
 #define LIGHTCV_CORE_C_API_H_
 
 // Call C++ objects from C, see https://isocpp.org/wiki/faq/mixing-c-and-cpp#get-cpp-data-members-from-c
+// This is the header for C API
 #ifdef __cplusplus
 extern "C" {
 #endif  // __cplusplus
@@ -33,8 +34,6 @@ typedef enum VarType {
   kVarMixed
 } VarType;
 
-
-// C Interface
 extern void DeleteTuple(Tuple **tup);
 extern Tuple* CreateTupleInteger(Integer i, Integer cnt);
 extern Tuple* CreateTupleReal(Real r, Integer cnt);
@@ -59,6 +58,18 @@ extern void TupleEraseItem(Tuple *tup, Integer index);
 extern Integer* TupleIntegerItems(Tuple *tup);
 extern Real* TupleRealItems(Tuple *tup);
 
+typedef struct Ref Ref;
+typedef enum ObjectType {
+  kObjNull = 0,
+  kObjImage,
+  kObjRegion,
+  kObjCurve,
+  kObjTuple
+} ObjectType;
+
+extern ObjectType ObjectGetType(Ref *obj);
+extern Ref* RetainObject(Ref *obj);
+extern void ReleaseObject(Ref **obj);
 
 #ifdef __cplusplus
 }
