@@ -12,7 +12,7 @@ if(c_hdrs)
     source_group("${operator}" FILES ${operator_files})
   endforeach()
 
-  add_library(${libname_prefix}c ${cc_srcs} ${cc_hdrs} ${c_hdrs} ${c_srcs})
+  add_library(${libname_prefix}c SHARED ${cc_srcs} ${cc_hdrs} ${c_hdrs} ${c_srcs})
   target_link_libraries(${libname_prefix}c ${libname_prefix}cc
                                              ${libname_prefix}core
     )
