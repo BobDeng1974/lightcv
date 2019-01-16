@@ -35,6 +35,11 @@ namespace LightCVTest
       int rc = Operator.gen_rectangle1(out rectangle, row1, col1, row2, col2);
       Assert.AreEqual(rc, 2);
       Core.ReleaseObject(out rectangle);
+      Core.DeleteTuple(out row1);
+      Core.DeleteTuple(out col1);
+      Core.DeleteTuple(out row2);
+      Core.DeleteTuple(out col2);
     }
   }
 }
+
