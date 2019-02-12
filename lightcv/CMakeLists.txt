@@ -11,5 +11,4 @@ add_subdirectory(lib)
 add_subdirectory(operators)
 add_subdirectory(cc)
 add_subdirectory(c)
-add_subdirectory(csharp)
 
